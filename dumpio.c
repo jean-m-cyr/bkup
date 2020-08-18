@@ -19,8 +19,7 @@ void dump_open(void)
 {
     if (flags.compress)
     {
-        gz_fh = gzdopen(
-            fileno(flags.backup ? stdout : stdin), flags.backup ? "wb" : "rb");
+        gz_fh = gzdopen(fileno(flags.backup ? stdout : stdin), flags.backup ? "wb" : "rb");
         if (gz_fh != NULL)
             return;
     }

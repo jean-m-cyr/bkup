@@ -11,10 +11,15 @@ typedef struct
 
 extern flags_t flags;
 
-extern uint16_t sector_size;
-extern uint32_t device_size;
+extern uint32_t sector_size;
+extern uint64_t device_size;
 
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+
+static inline uint64_t le64(uint64_t v)
+{
+    return __builtin_bswap64(v);
+}
 
 static inline uint32_t le32(uint32_t v)
 {
@@ -27,6 +32,11 @@ static inline uint16_t le16(uint16_t v)
 }
 
 #else
+
+static inline uint64_t le64(uint64_t v)
+{
+    return v;
+}
 
 static inline uint32_t le32(uint32_t v)
 {

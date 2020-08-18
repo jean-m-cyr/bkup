@@ -1,5 +1,7 @@
 #include "print.h"
 
+#include "globals.h"
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +28,8 @@ void error(char* fmt, ...)
 
 void* alloc(size_t s)
 {
+    if (flags.debug > 1)
+        print("alloc(%llu)\n", s);
     void* r = malloc(s);
     if (r == NULL)
         error("Can't allocate memory\n%s\n", strerror(errno));

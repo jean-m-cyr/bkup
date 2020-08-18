@@ -17,8 +17,8 @@
 #include <time.h>
 #include <unistd.h>
 
-uint16_t sector_size;
-uint32_t device_size;
+uint32_t sector_size;
+uint64_t device_size;
 flags_t flags = {0};
 
 static char* dev_fn = NULL;
@@ -86,7 +86,7 @@ static void parse_args(int ac, char* av[])
     }
 }
 
-static uint32_t getsysdata(char* fmt)
+static uint64_t getsysdata(char* fmt)
 {
     char* fn = alloc((strlen(fmt) - 2) + strlen(dev_fn) + 1);
     snprintf(fn, (strlen(fmt) - 2) + strlen(dev_fn) + 1, fmt, dev_fn);
@@ -100,7 +100,7 @@ static uint32_t getsysdata(char* fmt)
     ssize_t l = read(h, buf, sizeof(buf) - 1);
     buf[l] = 0;
     char* p;
-    uint32_t r = strtoul(buf, &p, 10);
+    uint64_t r = strtoull(buf, &p, 10);
     close(h);
     release(fn);
     return r;
